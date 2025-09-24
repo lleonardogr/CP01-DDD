@@ -75,12 +75,14 @@ Escolha uma opção: 2
 ## Critérios de avaliação (rubrica)
 | Critério | Descrição | Pontos            |
 |---|---|-------------------|
-| Modelo de dados | Classe `Tarefa` com campos corretos. | 3,0               |
-| Menu e fluxo | Laço principal, leitura com `Scanner`, tratamento de opção inválida. | 3,0               |
-| Operações CRUD | Adicionar, listar, marcar/desmarcar, remover funcionando. | 3,0               |
-| Validações e mensagens | Título não vazio, `id` inexistente, feedback claro ao usuário. | 2,0 (Bônus)       |
-| Organização e clareza | Nomes de variáveis, mensagens e estrutura do código. | 1,0               |
-| **Total** |  | **10,0** + 02,0 de Bônus |
+| Modelo de dados | Classe `Tarefa` com campos corretos. | 2,0               |
+| Estrutura de métodos | Implementação dos 8 métodos obrigatórios em `Main.java` conforme especificado. | 3,0               |
+| Menu e fluxo | Laço principal, leitura com `Scanner`, tratamento de opção inválida. | 2,0               |
+| Operações CRUD | Adicionar, listar, marcar/desmarcar, remover funcionando corretamente. | 2,0               |
+| Validações básicas | Título não vazio, `id` inexistente, feedback claro ao usuário. | 1,0               |
+| Validações avançadas | Tratamento robusto de erros, confirmações, mensagens detalhadas. | 2,0 (Bônus)       |
+| Organização e clareza | Nomes de variáveis, mensagens e estrutura do código. | 1,0 (Bônus)       |
+| **Total** |  | **10,0** + 03,0 de Bônus |
 
 ---
 
@@ -94,21 +96,78 @@ Escolha uma opção: 2
 
 ---
 
+## Estrutura de métodos obrigatória em Main.java
+**IMPORTANTE:** Você deve implementar os seguintes métodos na classe `Main`:
+
+### Métodos obrigatórios:
+1. **`public static void main(String[] args)`**
+   - Ponto de entrada da aplicação
+   - Inicializar variáveis globais (`ArrayList<Tarefa>`, `Scanner`, `proximoId`)
+   - Implementar o loop principal do menu
+
+2. **`public static void exibirMenu()`**
+   - Exibir as opções do menu numeradas de 1 a 6
+
+3. **`public static void adicionarTarefa()`**
+   - Ler título do usuário
+   - Validar entrada (não vazio, não apenas espaços)
+   - Criar nova tarefa com ID incremental
+   - Adicionar à lista
+   - Exibir mensagem de sucesso
+
+4. **`public static void listarTarefas()`**
+   - Percorrer a lista de tarefas
+   - Exibir cada tarefa no formato: `[X]/[ ] id - titulo`
+   - Tratar caso de lista vazia
+
+5. **`public static void marcarTarefaConcluida()`**
+   - Ler ID do usuário
+   - Buscar tarefa na lista pelo ID
+   - Marcar como concluída (`concluida = true`)
+   - Exibir mensagem de sucesso/erro
+
+6. **`public static void desmarcarTarefa()`**
+   - Ler ID do usuário
+   - Buscar tarefa na lista pelo ID
+   - Desmarcar (`concluida = false`)
+   - Exibir mensagem de sucesso/erro
+
+7. **`public static void removerTarefa()`**
+   - Ler ID do usuário
+   - Buscar e remover tarefa da lista pelo ID
+   - Exibir mensagem de sucesso/erro
+
+8. **`public static Tarefa buscarTarefaPorId(int id)`**
+   - Percorrer a lista procurando pela tarefa com o ID especificado
+   - Retornar a tarefa encontrada ou `null` se não encontrar
+
+### Variáveis globais necessárias:
+```java
+private static ArrayList<Tarefa> tarefas = new ArrayList<>();
+private static Scanner scanner = new Scanner(System.in);
+private static int proximoId = 1;
+```
+
 ## Roteiro sugerido (passo a passo)
 1. Criar `Tarefa.java` com os **campos** obrigatórios.
-2. Em `Main.java`, declarar `ArrayList<Tarefa>` e um `Scanner`.
-3. Implementar o **menu** dentro de um `while (true)` com `switch`/`if`.
-4. Implementar **Adicionar**:
-   - Ler título → validar → criar `Tarefa` com `id` incremental → adicionar na lista.
-5. Implementar **Listar**:
-   - Exibir todas as tarefas com formato `[X]/[ ] id - titulo`.
-6. Implementar **Marcar/Desmarcar**:
-   - Ler `id` → localizar na lista → alterar `concluida` → mensagem.
-7. Implementar **Remover**:
-   - Ler `id` → localizar → remover → mensagem.
-8. Testar com casos de uso: entradas válidas e inválidas.
-9. (Opcional) Implementar um ou mais **desafios**.
-
+2. Em `Main.java`, declarar as **variáveis globais** e os **métodos** listados acima.
+3. Implementar o método **`main()`** com o menu dentro de um `while (true)` e `switch`.
+4. Implementar **`adicionarTarefa()`**:
+   - Usar `scanner.nextLine()` para ler título
+   - Validar com `trim()` e verificar se não está vazio
+   - Criar `Tarefa` com `proximoId++` e adicionar na lista
+5. Implementar **`listarTarefas()`**:
+   - Verificar se lista está vazia primeiro
+   - Usar loop `for` para percorrer e exibir todas as tarefas
+6. Implementar **`buscarTarefaPorId()`**:
+   - Usar loop `for` ou `enhanced for` para percorrer a lista
+   - Comparar `tarefa.id == id` e retornar a tarefa encontrada
+7. Implementar **`marcarTarefaConcluida()`** e **`desmarcarTarefa()`**:
+   - Usar `buscarTarefaPorId()` para localizar a tarefa
+   - Alterar o campo `concluida` e exibir mensagem apropriada
+8. Implementar **`removerTarefa()`**:
+   - Usar `buscarTarefaPorId()` para localizar
+   - Usar `lista.remove(tarefa)` para remover e exibir mensagem
 ---
 
 ## Dicas e erros comuns
